@@ -57,7 +57,7 @@ class ImageSubscriber(Node):
     
     
     
-    '''
+    
     ##############################################################################
     # YOLO 네트워크 불러오기
     YOLO_net = cv2.dnn.readNet("/home/aa/yolov3-tiny.weights","/home/aa/yolov3-tiny.cfg")    
@@ -128,7 +128,7 @@ class ImageSubscriber(Node):
 	
 
     #resize_frame = cv2.resize(frame, (0, 0), fx=2, fy=2, interpolation=cv2.INTER_LINEAR)
-    '''
+    
     
     self.right_depth1 = cv2.cvtColor(frame_1, cv2.COLOR_BGR2GRAY)
     cv2.imshow("right", frame_1)
@@ -136,7 +136,7 @@ class ImageSubscriber(Node):
     #cv2.imshow("right", right)
     #cv2.imshow("YOLOv3", frame)
     cv2.waitKey(1)
-    #self.depthmap()
+    self.depthmap()
     
 ##############################################################################
 	
@@ -229,10 +229,10 @@ class ImageSubscriber(Node):
     
     self.left_depth1 = cv2.cvtColor(frame_2, cv2.COLOR_BGR2GRAY)
     #cv2.imshow("left", left)
-    cv2.imshow("left", frame_2)
+    #cv2.imshow("left", frame_2)
     #cv2.imshow("left", left_depth1)
     #cv2.imshow("YOLOv3", frame)
-    cv2.waitKey(1)
+    #cv2.waitKey(1)
 ##############################################################################
   def depthmap(self):
     #stereo = cv2.StereoBM_create(numDisparities=16, blockSize=15)
