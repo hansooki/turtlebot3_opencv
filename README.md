@@ -211,6 +211,9 @@ opencr과 manipulator 중 usb 0,1이 분별이 안돼, manipulator의 연결을 
 	!빌드해야 적용 
 
 22. git clone -b foxy https://github.com/ros-perception/image_comon.git 하여 카메라 캘러브레이션 파서 설치
+---
+opencv
+---
 
 23. 기존의 subscriber(webcam_sub.py)에
 	self.subscription = self.create_subscription(Image, 
