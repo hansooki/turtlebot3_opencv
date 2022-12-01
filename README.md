@@ -42,10 +42,14 @@ video 출력
 - - -
 터틀봇3와 ros2 sub 구동 성공
 
-    -robot_ws/src/cv_basics/pub,sub 수정
+	-robot_ws/src/cv_basics/pub,sub 수정
 
 ![Screenshot from 2022-11-18 11-57-00](https://user-images.githubusercontent.com/112480482/202607015-10e69a95-898f-4686-a4fd-a681f1a8aeb4.png)
 
+- - -
+11/15 
+- - -
+CSI-camera 예제 사용하려 함.  video 0,1 gst을 통해 테스트 정상작동함. 그러나 simple_camera.py로 실행 시 gstreamer가 정상 작동하지 않아 실행이 안됨. 여러 시도하다  .cpp 예제는 정상작동을 확인. simple_camera.cpp를 이용하여  publisher와 subscriber 만들 구상함.
 - - -
 #11.24
 - - -
@@ -72,7 +76,7 @@ opencv_cam node 코드에 right,left 화면이 나오는 simple_camera 코드로
 11. 29 
 - - -
 저장공간 부족으로 포맷
-xubuntu_20.04 image 굽기 
+ubuntu_20.04 image 굽기 
 터틀봇3 폭시 https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
 
 라즈베리파이 구성
