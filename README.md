@@ -231,3 +231,36 @@ opencv
 2. yolo 넣어 적용 실패 --> TypeError: only integer scalar arrays can be converted to a scalar index 오류가 output_layers = [layer_names[i - 1] for i in YOLO_net.getUnconnectedOutLayers()]에서 발생함, [layer_names[i[0] - 1]을 수정하여 해결.
 
 3. left, right 카메라로 depthmap 예제를 활용해 거리에 따라 차이를 나타냄
+
+---
+12/1
+---
+
+프로젝트 정리
+
+1. cv_bridge 
+    ROS 이미지 메시지와 OpenCV 이미지 사이를 변환하기위해 cv_bridge publisher, subscriber 만들어 
+    라즈베리캠에서 실행하여 정상작동하였습니다.
+
+2. yolo 
+    위의 subscriber에 yolo를 넣고 수정하여 터틀봇3의 라즈베리캠에서 발행한 데이터를 토픽으로 보내 원격 pc
+    에서 수신하여 정상작동하였습니다. 
+3. simple_camera.py—> simple_camera.cpp
+    이후 수신한 이미지로부터 깊이를 알기위해 라즈베리캠이 아닌 카메라가 2개인 스테레오 카메라(imx-219)를 사용하기로 결정하였습니다. 
+    - 카메라를 실행 할때 GST pipline 을 이용 해야지만 카메라가 나옴.
+    - C++ code 에서는 GST pipline 이작동함 그런데 python code 에서는 작동하지 않음.
+        - 패키지 설정 확인과정에서 python gst plugin 이 정상적으로 설치 되지 않음.
+            → c++ code에서 pipeline 1,2를 만들어 video 0,1을 각각 받아들여 right_cam, left_cam으로 설정, 카메라 영상을 처리 후 ros2 topic 으로 이미지로 (image_raw1, image_raw2를 발행 하기로 함. (opencv_cam_node.cpp) 활용
+    (문제점) 하나의 노드에서 두 가지 이미지가 발행되지 않음 img_raw1,2가 각각의 video 0,1번이 아닌 img_raw1이 두 화면이 나옴 → 기존의 opencv_cam_main을 
+    (해결방법) opencv_cam1, opencv_cam2 로 나누어 각각 img_raw1,2를 발행하여 실행 → subscriber 코드로 img_raw1,2 받고 정상 작동
+    
+6. left, right 카메라로 depthmap 예제를 활용해 거리에 따라 차이를 나타냄
+    발행한 이미지를 python code 로 받아서
+    - left, right 카메라를 grayscale(cv2.COLOR_BGR2GRAY) 한 후
+    - resize로 양쪽 300*300으로 설정.
+    - StereoBM create API 를 사용하여 StereoBM 객체를 ndisparities 0(시차 검색 범위), blocksize 21(크기가 작을수록 더 자세한 시차 맵을 제공하지만 알고리즘이 잘못된 대응을 찾을 가능성이 더 큼) 생성.
+    - compute 함수를 사용하여 depth map 이미지를 만들었습니다.
+    
+7. Depthmap, yolo 실행
+    - 위의 코드에 yolo 코드 추가
+    - 정상 작동하나 매우 느려짐
